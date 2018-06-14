@@ -7,12 +7,15 @@ import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 object ApiUtils {
 
     const val BASE_URL = "https://vnexpress.net/"
-
+    // resignter retrofit
     val retrofit = Retrofit.Builder()
+            //bo sung URL
             .baseUrl(BASE_URL)
+            //resignter retrofit using obserable pattern
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            //decode and encode data from server
             .addConverterFactory(SimpleXmlConverterFactory.create())
             .build()
-
+    //return all api u need
     fun getApiService() = retrofit.create(ApiService::class.java)
 }
