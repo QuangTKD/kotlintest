@@ -17,9 +17,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //Change something
+        //create arraylist contain News objects
         var newsArray = ArrayList<News>()
 
+        //create adapter for recycleview
         var myAdapter = NewsAdapter(newsArray)
 
         ApiUtils.getApiService().getWorldNewsRss()
@@ -42,8 +43,12 @@ class MainActivity : AppCompatActivity() {
 
 
 
+        //create object linearlayoutmanager
         var layoutManager = LinearLayoutManager(this)
+
+        //set layoutmanager for recycleview
         rv_main.layoutManager = layoutManager
+        // set adapter for recycleview
         rv_main.adapter = myAdapter
     }
 }
