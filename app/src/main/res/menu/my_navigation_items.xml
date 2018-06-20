@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/action_search"
+        android:title="A"
+        android:icon="@drawable/ic_poll_black_24dp" />
+    <item android:id="@+id/action_settings"
+        android:title="C"
+        android:icon="@drawable/ic_public_black_24dp" />
+    <item android:id="@+id/action_navigation"
+        android:title="B"
+        android:icon="@drawable/ic_remove_red_eye_black_24dp" />
+</menu>

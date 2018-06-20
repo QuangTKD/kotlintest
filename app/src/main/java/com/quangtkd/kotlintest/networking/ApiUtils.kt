@@ -6,7 +6,7 @@ import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 
 object ApiUtils {
 
-    const val BASE_URL = "https://vnexpress.net/"
+    const val BASE_URL = "http://vietnamtourism.gov.vn/"
     // resignter retrofit
     val retrofit = Retrofit.Builder()
             //bo sung URL

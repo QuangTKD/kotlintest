@@ -2,62 +2,75 @@ package com.quangtkd.kotlintest
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.BottomNavigationView
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.view.MenuItem
 import com.quangtkd.kotlintest.adapter.NewsAdapter
+import com.quangtkd.kotlintest.fragment.FragEventNews
+import com.quangtkd.kotlintest.fragment.FragHome
+import com.quangtkd.kotlintest.fragment.FragInvestNews
 import com.quangtkd.kotlintest.model.News
 import com.quangtkd.kotlintest.networking.ApiUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
+
+    val fragHome = FragHome()
+    val fragEventNews = FragEventNews()
+    val fragInvestNews = FragInvestNews()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //create arraylist contain News objects
-        var newsArray = ArrayList<News>()
+        main_bottom_nav_bar.setOnNavigationItemSelectedListener(this)
 
-        //create adapter for recycleview
-        var myAdapter = NewsAdapter(newsArray)
-        //return a Observable object
-        ApiUtils.getApiService().getWorldNewsRss()
-                //where the Observable perform on newthread
-                .subscribeOn(Schedulers.newThread())
-                //listen data of observable after finish on newthread to the mainthread
-                .observeOn(AndroidSchedulers.mainThread())
-                // 4 function : onnext, onerror
-                .subscribe({
-                    // code : reponse status
-                    //detech request success or not
-                    when (it.code()) {
-                        //request success
-                        200 -> {
-                            Log.d("quangtm", it.toString())
-                            for (item in it.body()!!.channel!!.itemList!!){
-                                newsArray.add(News(title = item.title!!, summary = item.description!!, url = item.link!!))
-                            }
-                            //notify for recyclerview that data changed ->reload
-                            myAdapter.notifyDataSetChanged()
+        supportFragmentManager
+                .beginTransaction()
+                .apply {
+                    replace(R.id.fl_main_container, fragHome)
+                    commit()
+                }
+
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId){
+            R.id.action_search -> {
+                supportFragmentManager
+                        .beginTransaction()
+                        .apply {
+                            replace(R.id.fl_main_container, fragHome)
+                            commit()
                         }
-                        //request success but no return data
-                        else -> Log.d("quangtm", "server error")
-                    }
-                },
-                        //request fail
-                {
-                })
+                return true
+            }
 
+            R.id.action_settings -> {
+                supportFragmentManager
+                        .beginTransaction()
+                        .apply {
+                            replace(R.id.fl_main_container, fragEventNews)
+                            commit()
+                        }
+                return true
+            }
 
+            R.id.action_navigation -> {
+                supportFragmentManager
+                        .beginTransaction()
+                        .apply {
+                            replace(R.id.fl_main_container, fragInvestNews)
+                            commit()
+                        }
+                return true
+            }
+        }
 
-        //create object linearlayoutmanager
-        var layoutManager = LinearLayoutManager(this)
-
-        //set layoutmanager for recycleview
-        rv_main.layoutManager = layoutManager
-        // set adapter for recycleview
-        rv_main.adapter = myAdapter
+        return false
     }
 }
