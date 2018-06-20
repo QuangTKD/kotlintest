@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         //create adapter for recycleview
         var myAdapter = NewsAdapter(newsArray)
         //return a Observable object
-        ApiUtils.getApiService().getWorldNewsRss()
+        ApiUtils.getApiService().getNewsRss()
                 //where the Observable perform on newthread
                 .subscribeOn(Schedulers.newThread())
                 //listen data of observable after finish on newthread to the mainthread

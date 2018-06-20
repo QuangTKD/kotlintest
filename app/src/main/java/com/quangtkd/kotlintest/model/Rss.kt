@@ -11,6 +11,6 @@ class Rss (
         @param:Attribute(name = "version", required = false)
         var version: String = "",
 
-        @field:Element(name = "channel")
-        var channel: Channel? = null
+@field:Element(name = "channel")
+var channel: Channel? = null
 )
