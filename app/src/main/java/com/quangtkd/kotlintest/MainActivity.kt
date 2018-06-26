@@ -6,6 +6,7 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.MenuItem
+import com.quangtkd.kotlintest.R.id.main_bottom_nav_bar
 import com.quangtkd.kotlintest.adapter.NewsAdapter
 import com.quangtkd.kotlintest.fragment.FragEventNews
 import com.quangtkd.kotlintest.fragment.FragHome
