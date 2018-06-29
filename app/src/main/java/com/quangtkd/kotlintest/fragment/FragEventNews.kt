@@ -11,6 +11,7 @@ import android.view.ViewGroup
 
 import com.quangtkd.kotlintest.R
 import com.quangtkd.kotlintest.adapter.NewsAdapter
+import com.quangtkd.kotlintest.model.CurrentWeather
 import com.quangtkd.kotlintest.model.News
 import com.quangtkd.kotlintest.networking.ApiUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -36,6 +37,8 @@ class FragEventNews : Fragment() {
         rv_frag_event_news.layoutManager = layoutManager
         rv_frag_event_news.adapter = adapter
 
+        var currentWeather: CurrentWeather?
+
         ApiUtils.getApiService().getLocalNewsRss()
                 //where the Observable perform on newthread
                 .subscribeOn(Schedulers.newThread())
@@ -48,19 +51,17 @@ class FragEventNews : Fragment() {
                     when (it.code()) {
                     //request success
                         200 -> {
-                            Log.d("quangtm", it.toString())
-                            for (item in it.body()!!.channel!!.itemList!!){
-                                newArray.add(News(title = item.title!!, summary = item.description!!, url = item.link!!))
-                            }
-                            //notify for recyclerview that data changed ->reload
-                            adapter.notifyDataSetChanged()
+                            currentWeather = it.body()
                         }
                     //request success but no return data
-                        else -> Log.d("quangtm", "server error")
+                        else -> {
+                            Log.d("quangtm", "server error")
+                        }
                     }
                 },
                         //request fail
                         {
+                            print(it.message)
                         })
     }
 
