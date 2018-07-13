@@ -49,7 +49,7 @@ class FragEventNews : Fragment() {
                             fiveDayWeather = it.body()
                             var celsius = ceil(fiveDayWeather?.list?.first()?.main?.temp!! - 273.15)
                             tv_frag_event_news_city.text = fiveDayWeather?.city?.name
-                            tv_frag_event_news_temp.text = celsius.toString()  +"\u00B0"
+                            tv_frag_event_news_temp.text = celsius.toInt().toString()  +"\u00B0"
                             WeatherArray.addAll(ArrayList(fiveDayWeather?.list))
 
                             adapter.notifyDataSetChanged()

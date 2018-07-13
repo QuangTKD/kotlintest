@@ -38,7 +38,7 @@ class WeatherAdapter(var WeatherArray: ArrayList<WeatherX>) : RecyclerView.Adapt
 
         var celsius = ceil(WeatherArray[position].main.temp!! - 273.15)
 
-        holder.itemView.tv_weather_cell_temp.text = celsius.toString()
+        holder.itemView.tv_weather_cell_temp.text = celsius.toInt().toString()
         holder.itemView.tv_weather_cell_day.text = dayOfWeek.toString()
 
         holder.itemView.setOnClickListener {

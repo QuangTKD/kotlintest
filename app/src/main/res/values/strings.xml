@@ -3,4 +3,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="id_1581130">Hà Nội</string>
+    <string name="id_1581298">Hải Phòng</string>
+    <string name="id_1580578">Tp. Hồ Chí Minh</string>
+
 </resources>
