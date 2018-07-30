@@ -1,12 +1,15 @@
 package com.quangtkd.kotlintest.adapter
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.quangtkd.kotlintest.R
+import com.quangtkd.kotlintest.R.id.img_weather_cell_icon
 import com.quangtkd.kotlintest.model.WeatherX
+import kotlinx.android.synthetic.main.weather_recyclerview_cell.*
 import kotlinx.android.synthetic.main.weather_recyclerview_cell.view.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -17,7 +20,7 @@ class WeatherAdapter(var WeatherArray: ArrayList<WeatherX>) : RecyclerView.Adapt
     private var context: Context? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherViewHolder {
-
+        context = parent.context
         val cellView = LayoutInflater.from(parent.context)
                 .inflate(R.layout.weather_recyclerview_cell, parent, false)
            return WeatherViewHolder(cellView)
@@ -41,9 +44,14 @@ class WeatherAdapter(var WeatherArray: ArrayList<WeatherX>) : RecyclerView.Adapt
         holder.itemView.tv_weather_cell_temp.text = celsius.toInt().toString()
         holder.itemView.tv_weather_cell_day.text = dayOfWeek.toString()
 
-        holder.itemView.setOnClickListener {
 
+
+        val name = "ic_" +WeatherArray[position]?.weather?.first()?.icon
+        val id = context?.resources?.getIdentifier(name, "drawable", context?.packageName)
+        if (id != null){
+        holder.itemView.img_weather_cell_icon.setImageResource(id)
         }
+        holder.itemView.setOnClickListener {}
     }
 
     class WeatherViewHolder(view: View) : RecyclerView.ViewHolder(view)

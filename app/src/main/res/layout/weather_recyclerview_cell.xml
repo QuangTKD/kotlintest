@@ -47,7 +47,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/tv_weather_cell_temp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_weather_cell_temp"
-        app:srcCompat="?android:attr/alertDialogIcon" />
+        app:srcCompat="@drawable/ic_01d" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline"
