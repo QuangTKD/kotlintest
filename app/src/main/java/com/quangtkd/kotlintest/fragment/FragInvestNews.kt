@@ -16,7 +16,6 @@ import com.quangtkd.kotlintest.networking.ApiUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.frag_invest_news.*
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.ceil
 
@@ -54,9 +53,13 @@ class FragInvestNews : Fragment() {
                         200 -> {
                             fiveDayWeather = it.body()
                             var celsius = ceil(fiveDayWeather?.list?.first()?.main?.temp!! - 273.15)
-                            tv_frag_invest_news_city.text = fiveDayWeather?.city?.name
+
                             tv_frag_invest_news_temp.text = celsius.toInt().toString()  +"\u00B0"
                             WeatherArray.addAll(ArrayList(fiveDayWeather?.list))
+
+
+                            val hello = context?.getResources()?.getString(R.string.id_1581130)
+                            tv_frag_invest_news_city.text = hello
 
                             adapter.notifyDataSetChanged()
 

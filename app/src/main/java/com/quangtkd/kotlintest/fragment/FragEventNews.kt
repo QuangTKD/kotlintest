@@ -1,16 +1,14 @@
 package com.quangtkd.kotlintest.fragment
 
 
-import android.content.Context
+
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import com.quangtkd.kotlintest.R
 import com.quangtkd.kotlintest.adapter.WeatherAdapter
 import com.quangtkd.kotlintest.model.*
@@ -18,7 +16,6 @@ import com.quangtkd.kotlintest.networking.ApiUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.frag_event_news.*
-import kotlinx.android.synthetic.main.weather_recyclerview_cell.*
 import kotlin.math.ceil
 
 
@@ -54,9 +51,12 @@ class FragEventNews : Fragment() {
                         200 -> {
                             fiveDayWeather = it.body()
                             var celsius = ceil(fiveDayWeather?.list?.first()?.main?.temp!! - 273.15)
-                            tv_frag_event_news_city.text = fiveDayWeather?.city?.name
                             tv_frag_event_news_temp.text = celsius.toInt().toString()  +"\u00B0"
                             WeatherArray.addAll(ArrayList(fiveDayWeather?.list))
+
+                            val hello = context?.getResources()?.getString(R.string.id_1581298)
+                            tv_frag_event_news_city.text = hello
+
                             adapter.notifyDataSetChanged()
                                }
                         else -> {

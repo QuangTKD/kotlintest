@@ -52,9 +52,11 @@ class FragHome : Fragment() {
                         200 -> {
                             fiveDayWeather = it.body()
                             var celsius = ceil(fiveDayWeather?.list?.first()?.main?.temp!! - 273.15)
-                            tv_frag_home_city.text = fiveDayWeather?.city?.name
                             tv_frag_home_temp.text = celsius.toInt().toString()  +"\u00B0"
                             WeatherArray.addAll(ArrayList(fiveDayWeather?.list))
+
+                            val hello = context?.getResources()?.getString(R.string.id_1580578)
+                            tv_frag_home_city.text = hello
 
                             adapter.notifyDataSetChanged()
 
