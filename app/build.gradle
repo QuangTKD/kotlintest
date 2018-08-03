@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'realm-android'
+
 android {
     compileSdkVersion 26
     defaultConfig {
@@ -47,4 +49,9 @@ dependencies {
     //XML Parser
     implementation 'com.squareup.retrofit2:converter-simplexml:2.3.0'
     implementation 'com.android.support:design:26.1.0'
+
+
 }
+
+
+
