@@ -14,7 +14,6 @@ open class Student(
         @Required
         var name: String = "",
 
-        @Required
         var age: Int = 0
 
 ) : RealmObject()
