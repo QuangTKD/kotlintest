@@ -21,4 +21,6 @@ open class Slot (
 
         var startTime : Date = Date()
 
+
+
 ) : RealmObject()

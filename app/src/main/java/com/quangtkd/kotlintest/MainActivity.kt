@@ -2,76 +2,65 @@ package com.quangtkd.kotlintest
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
-import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
-import android.view.MenuItem
-import com.quangtkd.kotlintest.R.id.main_bottom_nav_bar
-import com.quangtkd.kotlintest.adapter.NewsAdapter
-import com.quangtkd.kotlintest.fragment.FragEventNews
-import com.quangtkd.kotlintest.fragment.FragHome
-import com.quangtkd.kotlintest.fragment.FragInvestNews
-import com.quangtkd.kotlintest.model.News
-import com.quangtkd.kotlintest.networking.ApiUtils
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import android.view.View
+import com.quangtkd.kotlintest.model.Student
+import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), View.OnClickListener{
+    override fun onClick(p0: View?) {
+        when (p0!!.id){
+            R.id.btn__main_save ->  {
+                //Add or update student
+                Realm.getDefaultInstance().executeTransaction {
+                    it.insertOrUpdate(
+                            Student(
+                                    name = et_main_name.text.toString(),
+                                    age = Integer.parseInt(et_main_age.text.toString())
+                            )
+                    )
+                }
+                var studentStr = ""
 
-    val fragHome = FragHome()
-    val fragEventNews = FragEventNews()
-    val fragInvestNews = FragInvestNews()
+                //Get All student
+                Realm.getDefaultInstance()
+                        .where(Student::class.java)
+                        .findAll()
+                        .forEach {
+                            studentStr += "\n ${it.name}"
+                        }
+                tv_main_student.text = studentStr
+            }
+            R.id.btn_main_delete -> {
+                //Delete all student
+                Realm.getDefaultInstance().executeTransaction {
+                    it.where(Student::class.java)
+                            .findAll()
+                            .deleteAllFromRealm()
+                }
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        var name = ""
 
-        main_bottom_nav_bar.setOnNavigationItemSelectedListener(this)
-
-        supportFragmentManager
-                .beginTransaction()
-                .apply {
-                    replace(R.id.fl_main_container, fragHome)
-                    commit()
+        //Search student by age
+        Realm.getDefaultInstance()
+                .where(Student::class.java)
+                .equalTo("age", Integer.valueOf(0))
+                .findAll()
+                .forEach {
+                    name+= "\n ${it.name}"
                 }
 
+
+        tv_main_search_student.text = name
+
+        btn__main_save.setOnClickListener(this)
+        btn_main_delete.setOnClickListener(this)
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-
-        when (item.itemId){
-            R.id.action_search -> {
-                supportFragmentManager
-                        .beginTransaction()
-                        .apply {
-                            replace(R.id.fl_main_container, fragHome)
-                            commit()
-                        }
-                return true
-            }
-
-            R.id.action_settings -> {
-                supportFragmentManager
-                        .beginTransaction()
-                        .apply {
-                            replace(R.id.fl_main_container, fragEventNews)
-                            commit()
-                        }
-                return true
-            }
-
-            R.id.action_navigation -> {
-                supportFragmentManager
-                        .beginTransaction()
-                        .apply {
-                            replace(R.id.fl_main_container, fragInvestNews)
-                            commit()
-                        }
-                return true
-            }
-        }
-
-        return false
-    }
 }
