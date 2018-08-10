@@ -3,6 +3,8 @@ package com.quangtkd.kotlintest
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import com.quangtkd.kotlintest.model.Class
+import com.quangtkd.kotlintest.model.Slot
 import com.quangtkd.kotlintest.model.Student
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_main.*
@@ -46,6 +48,31 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         var name = ""
+
+
+        //Create slots
+        var slots = ArrayList<Slot>()
+        slots.add(Slot(name = "Math", duration = 45.0))
+        slots.add(Slot(name = "Science", duration = 45.0))
+        slots.add(Slot(name = "English", duration = 45.0))
+
+        //Create class
+        var myClass = Class(name = "101")
+        myClass.slots.addAll(slots)
+
+        //Add class into realm database
+        Realm.getDefaultInstance().executeTransaction {
+            it.insertOrUpdate(myClass)
+        }
+
+        //Test reverse relationships
+        var className = Realm.getDefaultInstance()
+                .where(Slot::class.java)
+                .equalTo("name", "Math")
+                .findFirst()
+                ?.classOwner
+                ?.first()
+                ?.name
 
         //Search student by age
         Realm.getDefaultInstance()

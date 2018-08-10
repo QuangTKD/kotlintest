@@ -1,6 +1,8 @@
 package com.quangtkd.kotlintest.model
 
 import io.realm.RealmObject
+import io.realm.RealmResults
+import io.realm.annotations.LinkingObjects
 import io.realm.annotations.PrimaryKey
 
 import io.realm.annotations.RealmClass
@@ -19,8 +21,11 @@ open class Slot (
 
         var duration : Double = 0.0,
 
-        var startTime : Date = Date()
+        var startTime : Date = Date(),
 
-
+        //Defind reverse relationship
+        //Linking object name is the name of slot array in class table
+        @LinkingObjects("slots")
+        val classOwner: RealmResults<Class>? = null
 
 ) : RealmObject()
