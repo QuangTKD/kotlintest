@@ -1,5 +1,8 @@
 package com.quangtkd.kotlintest.model
+import io.realm.RealmList
 import io.realm.RealmObject
+import io.realm.RealmResults
+import io.realm.annotations.LinkingObjects
 import io.realm.annotations.PrimaryKey
 import io.realm.annotations.RealmClass
 import io.realm.annotations.Required
@@ -14,6 +17,10 @@ open class Student(
         @Required
         var name: String = "",
 
-        var age: Int = 0
+        var age: Int = 0,
+
+        @LinkingObjects("students")
+        val studentOwner :  RealmResults<Class>? = null
+
 
 ) : RealmObject()

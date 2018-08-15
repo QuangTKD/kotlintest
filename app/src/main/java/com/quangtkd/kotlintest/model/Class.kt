@@ -16,5 +16,7 @@ open class Class (
         @Required
         var name : String ="",
 
-        var slots: RealmList<Slot> = RealmList()
+        var slots: RealmList<Slot> = RealmList(),
+        var students: RealmList<Student> = RealmList()
+
 ) : RealmObject()

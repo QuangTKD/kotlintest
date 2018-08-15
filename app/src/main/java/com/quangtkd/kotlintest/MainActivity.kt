@@ -56,23 +56,39 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
         slots.add(Slot(name = "Science", duration = 45.0))
         slots.add(Slot(name = "English", duration = 45.0))
 
+        //create students
+        var students = ArrayList<Student>()
+        students.add(Student(name = "Quang", age = 20))
+        students.add(Student(name = "Duc", age = 15))
+        students.add(Student(name = "Tuan", age = 25))
+
         //Create class
         var myClass = Class(name = "101")
         myClass.slots.addAll(slots)
+        myClass.students.addAll(students)
+
+
 
         //Add class into realm database
         Realm.getDefaultInstance().executeTransaction {
             it.insertOrUpdate(myClass)
         }
 
+
+
         //Test reverse relationships
         var className = Realm.getDefaultInstance()
-                .where(Slot::class.java)
-                .equalTo("name", "Math")
+                .where(Student::class.java)
+                .equalTo("name", "Tuan")
+                .equalTo("age", "20")
                 .findFirst()
-                ?.classOwner
+                ?.studentOwner
                 ?.first()
                 ?.name
+
+
+
+
 
         //Search student by age
         Realm.getDefaultInstance()
