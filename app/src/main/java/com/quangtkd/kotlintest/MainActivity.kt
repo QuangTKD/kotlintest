@@ -80,12 +80,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
         var className = Realm.getDefaultInstance()
                 .where(Student::class.java)
                 .equalTo("name", "Tuan")
-                .equalTo("age", "20")
+                .equalTo("age", 20 as Int)
                 .findFirst()
                 ?.studentOwner
                 ?.first()
                 ?.name
-
 
 
 
